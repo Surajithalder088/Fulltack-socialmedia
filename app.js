@@ -7,7 +7,7 @@ const bcrypt =require("bcryptjs");
 const cors=require("cors")
 
 const corsOrigin={
-      origin:['http://localhost:3000/'],
+      origin:['https://frontend-socilmedia.onrender.com'],
       optionSuccessStatus:200,
 }
 app.use(cors(corsOrigin))
