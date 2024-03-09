@@ -5,8 +5,12 @@ const port=process.env.PORT|| 8000;
 const mongoose=require("mongoose");
 const bcrypt =require("bcryptjs");
 const cors=require("cors")
-app.use(cors())
 
+const corsOrigin={
+      origin:['http://localhost:3000/'],
+      optionSuccessStatus:200,
+}
+app.use(cors(corsOrigin))
 // const router=require("./routes/user-routes");
 const User =require("./model/User") ; // importng user schema
 const Blog=require("./model/Blog");// importing blog schema
