@@ -18,12 +18,14 @@ const Blog=require("./model/Blog");// importing blog schema
 app.use(express.json());// telling our server that bodyy data are in json format
 
 // connecting to data base
-mongoose.connect(process.env.MONGO_URL).then(()=>{
+const connectDB=async()=>{
+await mongoose.connect(process.env.MONGO_URL).then(()=>{
       console.log(" connected to database")
 }).catch((e)=>{
       console.log("not connected")
 })
-
+}
+connectDB();
 // ----------------------------------------------------------------------user routes here
 
 app.get("/",(req,res)=>{
