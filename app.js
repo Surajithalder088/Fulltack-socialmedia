@@ -1,5 +1,5 @@
 const express=require("express");  // by surajit full stack here
-
+require("dotenv").config();
 const app=express();
 const port=process.env.PORT|| 8000;
 const mongoose=require("mongoose");
@@ -7,7 +7,8 @@ const bcrypt =require("bcryptjs");
 const cors=require("cors")
 
 const corsOrigin={
-      origin:['https://frontend-socilmedia.onrender.com'],
+    //  origin:['https://frontend-socilmedia.onrender.com'],
+    origin:[process.env.ORIGIN],
       optionSuccessStatus:200,
 }
 app.use(cors(corsOrigin))
@@ -17,7 +18,7 @@ const Blog=require("./model/Blog");// importing blog schema
 app.use(express.json());// telling our server that bodyy data are in json format
 
 // connecting to data base
-mongoose.connect("mongodb+srv://surajithalder088:IOZkPkGB7rJKvb6K@cluster2.9197ftj.mongodb.net/").then(()=>{
+mongoose.connect(process.env.MONGO_URL).then(()=>{
       console.log(" connected to database")
 }).catch((e)=>{
       console.log("not connected")
@@ -144,13 +145,14 @@ app.post("/api/blog/add",async (req,res)=>{
 })
 
 // update blog 
-app.put("/api/blog/update/:id", async(req,res,next)=>{
+app.patch("/api/blog/update/:id", async(req,res,next)=>{
       const {title,description}=req.body;
       const blogId=req.params.id;
       let blog;
       try{blog=await Blog.findByIdAndUpdate(blogId,{
             title,description
       })
+     await blog.save();
       }catch(e){
             return console.log(e);
       }
